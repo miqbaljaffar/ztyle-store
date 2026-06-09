@@ -1,12 +1,14 @@
 'use client'
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { CheckCircleIcon, ShoppingBagIcon, HomeIcon, ArrowPathIcon } from '@heroicons/react/24/outline';
 
-export default function PaymentSuccessPage() {
+// ─── Komponen dalam yang memakai useSearchParams ──────────────────────────────
+// Harus dipisah dan dibungkus <Suspense> agar Next.js bisa static render halaman ini
+function PaymentSuccessContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const { status: sessionStatus } = useSession();
@@ -89,5 +91,23 @@ export default function PaymentSuccessPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+// ─── Loading fallback saat Suspense belum selesai ─────────────────────────────
+function SuccessLoading() {
+  return (
+    <div className="min-h-[70vh] flex items-center justify-center">
+      <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-green-500" />
+    </div>
+  );
+}
+
+// ─── Default export: wrapper dengan Suspense ──────────────────────────────────
+export default function PaymentSuccessPage() {
+  return (
+    <Suspense fallback={<SuccessLoading />}>
+      <PaymentSuccessContent />
+    </Suspense>
   );
 }
