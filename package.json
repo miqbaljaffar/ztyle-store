@@ -27,7 +27,7 @@
     "jsdom": "^26.1.0",
     "lucide-react": "^0.534.0",
     "midtrans-client": "^1.4.3",
-    "next": "latest",
+    "next": "15.5.8",
     "next-auth": "^4.24.7",
     "next-cloudinary": "^6.16.0",
     "nodemailer": "^6.10.1",
