@@ -8,7 +8,7 @@ export default function SortDropdown() {
     const newSort = e.target.value;
     const params = new URLSearchParams(searchParams.toString());
     params.set('sort', newSort);
-    params.set('page', '1'); 
+    params.set('page', '1');
     setSearchParams(params);
   };
 
@@ -22,10 +22,10 @@ export default function SortDropdown() {
         value={currentSort}
         onChange={handleSortChange}
         className="input-field rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 w-full"
-        style={{ 
-            backgroundColor: '#fff', 
-            padding: '8px 12px',
-            lineHeight: '1.5'
+        style={{
+          backgroundColor: '#fff',
+          padding: '8px 12px',
+          lineHeight: '1.5'
         }}
       >
         <option value="newest">Terbaru</option>
@@ -35,4 +35,4 @@ export default function SortDropdown() {
       </select>
     </div>
   );
-}
+}
