@@ -6,5 +6,8 @@
     "build:server": "pnpm --filter ztyle-server build",
     "build:client": "pnpm --filter ztyle-client build",
     "build": "pnpm build:server && pnpm build:client"
+  },
+  "devDependencies": {
+    "esbuild": "^0.28.2"
   }
 }

@@ -1296,6 +1296,9 @@ app.get('/api/dashboard/stats', auth_1.authenticateJWT, (0, auth_1.requireRole)(
     }
 });
 // App listener
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-});
+if (process.env.NODE_ENV !== 'production' || !process.env.VERCEL) {
+    app.listen(PORT, () => {
+        console.log(`Server is running on port ${PORT}`);
+    });
+}
+exports.default = app;

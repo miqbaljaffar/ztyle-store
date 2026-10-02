@@ -6,7 +6,7 @@ import { z } from 'zod';
 import { useAuthStore } from '../store/authStore';
 import { toast } from 'sonner';
 import { UserIcon, AtSymbolIcon, KeyIcon } from '@heroicons/react/24/outline';
-import { ArrowRightIcon } from '@heroicons/react/20/solid';
+import { ArrowRightIcon } from '@heroicons/react/24/solid';
 
 const RegisterSchema = z.object({
   name: z.string().min(3, 'Nama harus memiliki setidaknya 3 karakter.'),
