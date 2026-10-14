@@ -1,9 +1,13 @@
 import nodemailer from 'nodemailer';
 
+// Gunakan SMTP_PORT 465 untuk secure:true, atau 587 untuk secure:false (STARTTLS).
+// Set env: SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASSWORD di Vercel Dashboard.
+const smtpPort = Number(process.env.SMTP_PORT ?? 587);
+
 const transporter = nodemailer.createTransport({
   host: process.env.SMTP_HOST,
-  port: Number(process.env.SMTP_PORT),
-  secure: true, 
+  port: smtpPort,
+  secure: smtpPort === 465,
   auth: {
     user: process.env.SMTP_USER,
     pass: process.env.SMTP_PASSWORD,

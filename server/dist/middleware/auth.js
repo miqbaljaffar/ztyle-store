@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.authenticateJWT = authenticateJWT;
 exports.requireRole = requireRole;
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-const JWT_SECRET = process.env.JWT_SECRET || 'ztyle-secret-key-12345';
+const JWT_SECRET = process.env.JWT_SECRET ?? 'ztyle-dev-secret-do-not-use-in-prod';
 function authenticateJWT(req, res, next) {
     const token = req.cookies.token || req.headers.authorization?.split(' ')[1];
     if (!token) {

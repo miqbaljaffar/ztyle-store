@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 
-const JWT_SECRET = process.env.JWT_SECRET || 'ztyle-secret-key-12345';
+const JWT_SECRET = process.env.JWT_SECRET ?? 'ztyle-dev-secret-do-not-use-in-prod';
 
 export interface AuthRequest extends Request {
   user?: {

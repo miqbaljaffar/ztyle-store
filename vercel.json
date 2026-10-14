@@ -1,8 +1,17 @@
 {
+  "version": 2,
+  "buildCommand": "cd server && pnpm install && pnpm exec prisma generate && cd ../client && pnpm install && pnpm build",
+  "outputDirectory": "client/dist",
+  "functions": {
+    "api/index.ts": {
+      "maxDuration": 30,
+      "memory": 1024
+    }
+  },
   "rewrites": [
     {
       "source": "/api/:path*",
-      "destination": "/api"
+      "destination": "/api/index"
     },
     {
       "source": "/((?!api/).*)",

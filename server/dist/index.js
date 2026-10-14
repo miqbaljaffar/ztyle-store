@@ -19,8 +19,12 @@ const sanitizer_1 = require("./lib/sanitizer");
 const auth_1 = require("./middleware/auth");
 const app = (0, express_1.default)();
 const PORT = process.env.PORT || 5000;
-const JWT_SECRET = process.env.JWT_SECRET || 'ztyle-secret-key-12345';
-const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:5173';
+// JWT_SECRET WAJIB di-set via environment variable. Tidak ada fallback di production.
+if (!process.env.JWT_SECRET && process.env.NODE_ENV === 'production') {
+    throw new Error('FATAL: JWT_SECRET environment variable is not set in production!');
+}
+const JWT_SECRET = process.env.JWT_SECRET ?? 'ztyle-dev-secret-do-not-use-in-prod';
+const FRONTEND_URL = process.env.FRONTEND_URL ?? 'http://localhost:5173';
 // Multer in-memory storage for handling vercel blob upload
 const upload = (0, multer_1.default)({ storage: multer_1.default.memoryStorage() });
 // Middleware
@@ -1295,10 +1299,11 @@ app.get('/api/dashboard/stats', auth_1.authenticateJWT, (0, auth_1.requireRole)(
         return res.status(500).json({ message: "Internal Server Error" });
     }
 });
-// App listener
-if (process.env.NODE_ENV !== 'production' || !process.env.VERCEL) {
+// App listener: hanya berjalan di lingkungan non-Vercel (local / server biasa).
+// Di Vercel, Express di-export sebagai serverless function handler.
+if (!process.env.VERCEL) {
     app.listen(PORT, () => {
-        console.log(`Server is running on port ${PORT}`);
+        console.log(`[server] Running on http://localhost:${PORT}`);
     });
 }
 exports.default = app;

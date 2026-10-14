@@ -1,3 +1,12 @@
 node_modules
 .env
+.env.local
+.env.*.local
 .next
+dist/
+*.tsbuildinfo
+# File temporary pnpm
+pnpm-lock.yaml.*[0-9]
+# OS files
+.DS_Store
+Thumbs.db
