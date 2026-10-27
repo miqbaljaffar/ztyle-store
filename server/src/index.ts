@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
+import { APP_URL } from './lib/config';
 
 // ─── ROUTES ───────────────────────────────────────────────────
 import authRouter from './routes/auth.routes';
@@ -16,8 +17,6 @@ import paymentRouter from './routes/payment.routes';
 import dashboardRouter from './routes/dashboard.routes';
 
 const app = express();
-const PORT = process.env.PORT || 5000;
-const FRONTEND_URL = process.env.FRONTEND_URL ?? 'http://localhost:5173';
 
 // ─── GUARD: variabel wajib di production ─────────────────────
 if (process.env.NODE_ENV === 'production' && !process.env.JWT_SECRET) {
@@ -25,7 +24,7 @@ if (process.env.NODE_ENV === 'production' && !process.env.JWT_SECRET) {
 }
 
 // ─── MIDDLEWARE ───────────────────────────────────────────────
-app.use(cors({ origin: FRONTEND_URL, credentials: true }));
+app.use(cors({ origin: APP_URL, credentials: true }));
 app.use(express.json());
 app.use(cookieParser());
 
@@ -41,13 +40,5 @@ app.use('/api/reviews',   reviewsRouter);     // cek eligibility & buat ulasan
 app.use('/api/news',      newsRouter);        // berita/artikel
 app.use('/api/payment',   paymentRouter);     // Midtrans webhook & snap-token
 app.use('/api/dashboard', dashboardRouter);   // statistik admin
-
-// ─── APP LISTENER ─────────────────────────────────────────────
-// Di Vercel, app di-export sebagai serverless handler — app.listen() tidak dipanggil.
-if (!process.env.VERCEL) {
-  app.listen(PORT, () => {
-    console.log(`[server] Running on http://localhost:${PORT}`);
-  });
-}
 
 export default app;

@@ -1,4 +1,5 @@
 import MidtransClient from 'midtrans-client';
+import { APP_URL } from './config';
 
 const snap = new MidtransClient.Snap({
   isProduction: process.env.NODE_ENV === 'production',
@@ -37,9 +38,9 @@ export async function createSnapTransaction(params: CreateSnapTransactionParams)
     item_details: itemDetails,
     customer_details: customerDetails,
     callbacks: {
-      finish: `${process.env.FRONTEND_URL}/payment/success`,
-      error: `${process.env.FRONTEND_URL}/payment/error`,
-      pending: `${process.env.FRONTEND_URL}/payment/pending`,
+      finish: `${APP_URL}/payment/success`,
+      error: `${APP_URL}/payment/error`,
+      pending: `${APP_URL}/payment/pending`,
     },
   };
 

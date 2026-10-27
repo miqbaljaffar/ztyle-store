@@ -5,7 +5,7 @@ import { useAuthStore } from '../store/authStore';
 import { toast } from 'sonner';
 import { MapPinIcon, ShoppingCartIcon, TrashIcon, CreditCardIcon, ShieldCheckIcon } from '@heroicons/react/24/outline';
 
-// Window snap typing is declared globally in client/src/global.d.ts
+// Window snap typing is declared globally in src/global.d.ts.
 
 export default function Checkout() {
   const { items: cartItems, updateQuantity, removeFromCart, clearCart } = useCartStore();
@@ -25,12 +25,11 @@ export default function Checkout() {
 
   // Load Midtrans Snap.js script dynamically
   useEffect(() => {
-    // Sandbox vs Production based on import.meta.env
-    const isProd = import.meta.env.PROD;
+    const isProd = process.env.NODE_ENV === 'production';
     const snapUrl = isProd
       ? 'https://app.midtrans.com/snap/snap.js'
       : 'https://app.sandbox.midtrans.com/snap/snap.js';
-    const clientKey = import.meta.env.VITE_MIDTRANS_CLIENT_KEY || '';
+    const clientKey = process.env.NEXT_PUBLIC_MIDTRANS_CLIENT_KEY || '';
 
     if (window.snap) {
       setSnapReady(true);

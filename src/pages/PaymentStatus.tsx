@@ -108,11 +108,11 @@ export default function PaymentStatus() {
   // Load Midtrans Snap.js script dynamically if PENDING
   useEffect(() => {
     if (order && order.status === 'PENDING') {
-      const isProd = import.meta.env.PROD;
+      const isProd = process.env.NODE_ENV === 'production';
       const snapUrl = isProd
         ? 'https://app.midtrans.com/snap/snap.js'
         : 'https://app.sandbox.midtrans.com/snap/snap.js';
-      const clientKey = import.meta.env.VITE_MIDTRANS_CLIENT_KEY || '';
+      const clientKey = process.env.NEXT_PUBLIC_MIDTRANS_CLIENT_KEY || '';
 
       if (window.snap) {
         setSnapReady(true);

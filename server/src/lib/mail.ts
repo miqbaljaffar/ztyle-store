@@ -1,4 +1,5 @@
 import nodemailer from 'nodemailer';
+import { APP_URL } from './config';
 
 // Gunakan SMTP_PORT 465 untuk secure:true, atau 587 untuk secure:false (STARTTLS).
 // Set env: SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASSWORD di Vercel Dashboard.
@@ -15,7 +16,7 @@ const transporter = nodemailer.createTransport({
 });
 
 export async function sendVerificationEmail(email: string, token: string) {
-  const verificationUrl = `${process.env.FRONTEND_URL}/verify-email?token=${token}`;
+  const verificationUrl = `${APP_URL}/verify-email?token=${token}`;
 
   await transporter.sendMail({
     from: '"Ztyle App" <no-reply@ztyle.com>',
@@ -32,7 +33,7 @@ export async function sendVerificationEmail(email: string, token: string) {
 }
 
 export async function sendPasswordResetEmail(email: string, token: string) {
-  const resetUrl = `${process.env.FRONTEND_URL}/reset-password?token=${token}`;
+  const resetUrl = `${APP_URL}/reset-password?token=${token}`;
 
   await transporter.sendMail({
     from: '"Ztyle App" <no-reply@ztyle.com>',

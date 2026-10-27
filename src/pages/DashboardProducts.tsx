@@ -185,7 +185,7 @@ function ProductsManagementComponent() {
       const fileFormData = new FormData();
       fileFormData.append('file', selectedFile);
       try {
-        const uploadRes = await fetch('/api/upload', {
+        const uploadRes = await fetch('/api/payment/upload', {
           method: 'POST',
           body: fileFormData,
         });

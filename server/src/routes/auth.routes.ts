@@ -12,7 +12,6 @@ import { z } from 'zod';
 const router = Router();
 
 const JWT_SECRET = process.env.JWT_SECRET ?? 'ztyle-dev-secret-do-not-use-in-prod';
-const FRONTEND_URL = process.env.FRONTEND_URL ?? 'http://localhost:5173';
 
 // ─── HELPER ───────────────────────────────────────────────────
 
