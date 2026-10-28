@@ -55,8 +55,13 @@ export default function NewsDetail() {
   const [newsItem, setNewsItem] = useState<NewsItem | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [fullUrl, setFullUrl] = useState('');
 
-  const fullUrl = window.location.href;
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setFullUrl(window.location.href);
+    }
+  }, []);
 
   useEffect(() => {
     const fetchNewsDetail = async () => {

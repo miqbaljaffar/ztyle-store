@@ -18,11 +18,6 @@ import dashboardRouter from './routes/dashboard.routes';
 
 const app = express();
 
-// ─── GUARD: variabel wajib di production ─────────────────────
-if (process.env.NODE_ENV === 'production' && !process.env.JWT_SECRET) {
-  throw new Error('FATAL: JWT_SECRET environment variable is not set in production!');
-}
-
 // ─── MIDDLEWARE ───────────────────────────────────────────────
 app.use(cors({ origin: APP_URL, credentials: true }));
 app.use(express.json());

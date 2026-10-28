@@ -5,13 +5,11 @@ import { hash, compare } from 'bcrypt';
 
 import prisma from '../lib/prisma';
 import { sendVerificationEmail, sendPasswordResetEmail } from '../lib/mail';
-import { authenticateJWT, AuthRequest } from '../middleware/auth';
+import { authenticateJWT, AuthRequest, getJwtSecret } from '../middleware/auth';
 import { userRegisterSchema, loginSchema, resetPasswordSchema } from '../schemas';
 import { z } from 'zod';
 
 const router = Router();
-
-const JWT_SECRET = process.env.JWT_SECRET ?? 'ztyle-dev-secret-do-not-use-in-prod';
 
 // ─── HELPER ───────────────────────────────────────────────────
 
@@ -98,7 +96,7 @@ router.post('/login', async (req: Request, res: Response) => {
 
     const token = jwt.sign(
       { id: user.id, email: user.email, role: user.role, name: user.name },
-      JWT_SECRET,
+      getJwtSecret(),
       { expiresIn: '24h' }
     );
 

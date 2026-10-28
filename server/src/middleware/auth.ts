@@ -1,7 +1,19 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 
-const JWT_SECRET = process.env.JWT_SECRET ?? 'ztyle-dev-secret-do-not-use-in-prod';
+export function getJwtSecret() {
+  const configuredSecret = process.env.JWT_SECRET?.trim();
+
+  if (configuredSecret) {
+    return configuredSecret;
+  }
+
+  if (process.env.NODE_ENV === 'production') {
+    throw new Error('FATAL: JWT_SECRET environment variable is not set in production!');
+  }
+
+  return 'ztyle-dev-secret-do-not-use-in-prod';
+}
 
 export interface AuthRequest extends Request {
   user?: {
@@ -20,7 +32,7 @@ export function authenticateJWT(req: AuthRequest, res: Response, next: NextFunct
   }
 
   try {
-    const decoded = jwt.verify(token, JWT_SECRET) as AuthRequest['user'];
+    const decoded = jwt.verify(token, getJwtSecret()) as AuthRequest['user'];
     req.user = decoded;
     next();
   } catch (error) {
